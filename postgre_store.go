@@ -3,6 +3,7 @@ package products
 import (
 	"database/sql"
 	"log"
+	_ "github.com/lib/pq"
 )
 
 var Queries = []string{
