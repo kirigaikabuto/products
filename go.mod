@@ -1,3 +1,3 @@
-module OnlineShop/products
+module products
 
 go 1.13
