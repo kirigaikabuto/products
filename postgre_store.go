@@ -7,8 +7,8 @@ import (
 )
 
 var Queries = []string{
-	`CREATE TABLE IF NOT EXISTS products(
-		id serial
+	`CREATE TABLE IF NOT EXISTS products (
+		id serial,
 		name text,
 		price int,
 		image_url text,
