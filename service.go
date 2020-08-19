@@ -1,6 +1,5 @@
 package products
 
-
 type ProductService interface {
 	ListProducts() ([]Product, error)
 	CreateProduct(cmd *CreateProductCommand) (*Product, error)
@@ -13,7 +12,7 @@ type productService struct {
 	productStore ProductStore
 }
 
-func NewProductService(productStore ProductStore) ProductService{
+func NewProductService(productStore ProductStore) ProductService {
 	return &productService{productStore: productStore}
 }
 
@@ -27,10 +26,10 @@ func (ps *productService) ListProducts() ([]Product, error) {
 
 func (ps *productService) CreateProduct(cmd *CreateProductCommand) (*Product, error) {
 	product := &Product{
-		Name: cmd.Name,
+		Name:  cmd.Name,
 		Price: cmd.Price,
 	}
-	newProduct,err := ps.productStore.Create(product)
+	newProduct, err := ps.productStore.Create(product)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +58,7 @@ func (ps *productService) UpdateProduct(cmd *UpdateProductCommand) (*Product, er
 	if err != nil {
 		return nil, err
 	}
-	updatedProduct,err := ps.productStore.Update(updateProduct)
+	updatedProduct, err := ps.productStore.Update(updateProduct)
 	if err != nil {
 		return nil, err
 	}
@@ -78,5 +77,3 @@ func (ps *productService) DeleteProduct(cmd *DeleteProductCommand) error {
 	}
 	return nil
 }
-
-
