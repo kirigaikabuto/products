@@ -53,12 +53,12 @@ func(httpFac *httpEndpointsFactory) CreateProductEndpoint() func(w http.Response
 				return
 			}
 		}
-		//data, err := createProductReq.Exec(httpFac.productService)
-		//if err != nil {
-		//	respondJSON(w,http.StatusInternalServerError,&customError{err.Error()})
-		//	return
-		//}
-		respondJSON(w,http.StatusCreated,createProductReq)
+		data, err := createProductReq.Exec(httpFac.productService)
+		if err != nil {
+			respondJSON(w,http.StatusInternalServerError,&customError{err.Error()})
+			return
+		}
+		respondJSON(w,http.StatusCreated,data)
 	}
 }
 //GetProductByIdEndpoint(idParam string) func(w http.ResponseWriter,r *http.Request)
