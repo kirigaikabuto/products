@@ -2,6 +2,7 @@ package products
 
 import (
 	"database/sql"
+	"errors"
 	"log"
 	_ "github.com/lib/pq"
 )
@@ -36,10 +37,34 @@ func NewPostgreStore(cfg Config) (ProductStore, error) {
 
 func (ps *postgreStore) List() ([]Product, error) {
 	var products []Product
+	data, err := ps.db.Query("select id,name,price,image_url from products")
+	if err != nil {
+		return nil, err
+	}
+	defer data.Close()
+	for data.Next() {
+		product := Product{}
+		err = data.Scan(&product.Id,&product.Name,&product.Price,&product.ImageUrl)
+		if err != nil {
+			return nil, err
+		}
+		products = append(products, product)
+	}
 	return products, nil
 }
 
 func (ps *postgreStore) Create(product *Product) (*Product, error) {
+	result, err := ps.db.Exec("insert into products (name,price,image_url) values ($1,$2,$3)",product.Name,product.Price,product.ImageUrl)
+	if err != nil {
+		return nil, err
+	}
+	n, err := result.RowsAffected()
+	if err != nil {
+		return nil, err
+	}
+	if n <= 0 {
+		return nil, errors.New("not defined error")
+	}
 	return product, nil
 }
 
