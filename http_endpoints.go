@@ -18,7 +18,7 @@ type httpEndpointsFactory struct {
 }
 
 type customError struct {
-	message string `json:"message"`
+	Message string `json:"message"`
 }
 
 func NewHttpEndpoints(productService ProductService) HttpEndpointsFactory {
