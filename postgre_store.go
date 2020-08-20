@@ -86,12 +86,12 @@ func (ps *postgreStore) Update(product *ProductUpdate) (*Product, error) {
 	if product.Price != nil {
 		cnt++
 		parts = append(parts, "price = $"+strconv.Itoa(cnt))
-		values = append(values, product.Name)
+		values = append(values, product.Price)
 	}
 	if product.ImageUrl != nil {
 		cnt++
 		parts = append(parts, "image_url = $"+strconv.Itoa(cnt))
-		values = append(values, product.Name)
+		values = append(values, product.ImageUrl)
 	}
 	if len(parts) <= 0 {
 		return nil, errors.New("nothing to update")
