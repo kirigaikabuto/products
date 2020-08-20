@@ -54,7 +54,7 @@ func (ps *postgreStore) List() ([]Product, error) {
 }
 
 func (ps *postgreStore) Create(product *Product) (*Product, error) {
-	result, err := ps.db.Exec("insert into products (name,price,image_url) values ($1,$2,$3)",product.Name,product.Price,product.ImageUrl)
+	result, err := ps.db.Exec("insert into products (name,price,image_url) values ($1,$2,$3) RETURNING id",product.Name,product.Price,product.ImageUrl)
 	if err != nil {
 		return nil, err
 	}
