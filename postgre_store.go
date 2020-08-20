@@ -2,9 +2,8 @@ package products
 
 import (
 	"database/sql"
-	"errors"
-	"log"
 	_ "github.com/lib/pq"
+	"log"
 )
 
 var Queries = []string{
@@ -54,16 +53,9 @@ func (ps *postgreStore) List() ([]Product, error) {
 }
 
 func (ps *postgreStore) Create(product *Product) (*Product, error) {
-	result, err := ps.db.Exec("insert into products (name,price,image_url) values ($1,$2,$3) RETURNING id",product.Name,product.Price,product.ImageUrl)
+	err := ps.db.QueryRow("insert into products (name,price,image_url) values ($1,$2,$3) RETURNING id",product.Name,product.Price,product.ImageUrl).Scan(&product.Id)
 	if err != nil {
 		return nil, err
-	}
-	n, err := result.RowsAffected()
-	if err != nil {
-		return nil, err
-	}
-	if n <= 0 {
-		return nil, errors.New("not defined error")
 	}
 	return product, nil
 }
