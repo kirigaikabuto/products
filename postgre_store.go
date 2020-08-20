@@ -65,6 +65,11 @@ func (ps *postgreStore) Create(product *Product) (*Product, error) {
 	if n <= 0 {
 		return nil, errors.New("not defined error")
 	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return nil, errors.New("not get last insert id")
+	}
+	product.Id = id
 	return product, nil
 }
 
