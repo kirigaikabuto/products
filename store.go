@@ -10,7 +10,7 @@ type Product struct {
 type ProductUpdate struct {
 	Id       int64   `json:"id,omitempty"`
 	Name     *string `json:"name,omitempty"`
-	Price    *int64  `json:"price,omitempty"`
+	Price    int64  `json:"price,omitempty"`
 	ImageUrl *string `json:"image_url,omitempty"`
 }
 
