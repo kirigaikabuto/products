@@ -47,6 +47,7 @@ func (ps *productService) GetProductById(cmd *GetProductByIdCommand) (*Product, 
 
 func (ps *productService) UpdateProduct(cmd *UpdateProductCommand) (*Product, error) {
 	updateProduct := &ProductUpdate{}
+	updateProduct.Id = cmd.Id
 	if cmd.Price != nil {
 		updateProduct.Price = cmd.Price
 	} else if cmd.Name != nil {
