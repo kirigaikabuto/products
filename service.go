@@ -49,10 +49,12 @@ func (ps *productService) UpdateProduct(cmd *UpdateProductCommand) (*Product, er
 	updateProduct := &ProductUpdate{}
 	updateProduct.Id = cmd.Id
 	if cmd.Price != nil {
-		updateProduct.Price = *cmd.Price
-	} else if cmd.Name != nil {
+		updateProduct.Price = cmd.Price
+	}
+	if cmd.Name != nil {
 		updateProduct.Name = cmd.Name
-	} else if cmd.ImageUrl != nil {
+	}
+	if cmd.ImageUrl != nil {
 		updateProduct.ImageUrl = cmd.ImageUrl
 	}
 	cmdGetProductById := &GetProductByIdCommand{cmd.Id}

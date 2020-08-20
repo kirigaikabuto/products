@@ -83,7 +83,7 @@ func (ps *postgreStore) Update(product *ProductUpdate) (*Product, error) {
 		parts = append(parts, "name = $"+strconv.Itoa(cnt))
 		values = append(values, product.Name)
 	}
-	if product.Price != 0 {
+	if product.Price != nil {
 		cnt++
 		parts = append(parts, "price = $"+strconv.Itoa(cnt))
 		values = append(values, product.Name)
