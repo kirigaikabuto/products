@@ -28,6 +28,7 @@ func (ps *productService) CreateProduct(cmd *CreateProductCommand) (*Product, er
 	product := &Product{
 		Name:  cmd.Name,
 		Price: cmd.Price,
+		ImageUrl: cmd.ImageUrl,
 	}
 	newProduct, err := ps.productStore.Create(product)
 	if err != nil {
