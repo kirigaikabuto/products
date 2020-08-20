@@ -1,10 +1,10 @@
 package products
 
 type Product struct {
-	Id       int64  `json:"id"`
-	Name     string `json:"name"`
-	Price    int64  `json:"price"`
-	ImageUrl string `json:"image_url"`
+	Id       int64  `json:"id,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Price    int64  `json:"price,omitempty"`
+	ImageUrl string `json:"image_url,omitempty"`
 }
 
 type ProductStore interface {
