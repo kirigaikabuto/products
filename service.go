@@ -26,8 +26,8 @@ func (ps *productService) ListProducts() ([]Product, error) {
 
 func (ps *productService) CreateProduct(cmd *CreateProductCommand) (*Product, error) {
 	product := &Product{
-		Name:  cmd.Name,
-		Price: cmd.Price,
+		Name:     cmd.Name,
+		Price:    cmd.Price,
 		ImageUrl: cmd.ImageUrl,
 	}
 	newProduct, err := ps.productStore.Create(product)
@@ -46,13 +46,13 @@ func (ps *productService) GetProductById(cmd *GetProductByIdCommand) (*Product, 
 }
 
 func (ps *productService) UpdateProduct(cmd *UpdateProductCommand) (*Product, error) {
-	updateProduct := &Product{}
+	updateProduct := &ProductUpdate{}
 	if cmd.Price != nil {
-		updateProduct.Price = *cmd.Price
+		updateProduct.Price = cmd.Price
 	} else if cmd.Name != nil {
-		updateProduct.Name = *cmd.Name
+		updateProduct.Name = cmd.Name
 	} else if cmd.ImageUrl != nil {
-		updateProduct.ImageUrl = *cmd.ImageUrl
+		updateProduct.ImageUrl = cmd.ImageUrl
 	}
 	cmdGetProductById := &GetProductByIdCommand{cmd.Id}
 	_, err := ps.GetProductById(cmdGetProductById)

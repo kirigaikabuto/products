@@ -46,7 +46,7 @@ func (ps *postgreStore) List() ([]Product, error) {
 	defer data.Close()
 	for data.Next() {
 		product := Product{}
-		err = data.Scan(&product.Id,&product.Name,&product.Price,&product.ImageUrl)
+		err = data.Scan(&product.Id, &product.Name, &product.Price, &product.ImageUrl)
 		if err != nil {
 			return nil, err
 		}
@@ -56,7 +56,7 @@ func (ps *postgreStore) List() ([]Product, error) {
 }
 
 func (ps *postgreStore) Create(product *Product) (*Product, error) {
-	err := ps.db.QueryRow("insert into products (name,price,image_url) values ($1,$2,$3) RETURNING id",product.Name,product.Price,product.ImageUrl).Scan(&product.Id)
+	err := ps.db.QueryRow("insert into products (name,price,image_url) values ($1,$2,$3) RETURNING id", product.Name, product.Price, product.ImageUrl).Scan(&product.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +65,7 @@ func (ps *postgreStore) Create(product *Product) (*Product, error) {
 
 func (ps *postgreStore) GetById(id int64) (*Product, error) {
 	product := &Product{}
-	err := ps.db.QueryRow("select name,price,image_url from products where id= $1",id).Scan(&product.Name,&product.Price,&product.ImageUrl)
+	err := ps.db.QueryRow("select name,price,image_url from products where id= $1", id).Scan(&product.Name, &product.Price, &product.ImageUrl)
 	if err != nil {
 		return nil, err
 	}
@@ -81,24 +81,24 @@ func (ps *postgreStore) Update(product *ProductUpdate) (*Product, error) {
 	if product.Name != nil {
 		cnt++
 		parts = append(parts, "name = $"+strconv.Itoa(cnt))
-		values = append(values,product.Name)
+		values = append(values, product.Name)
 	}
 	if product.Price != nil {
 		cnt++
 		parts = append(parts, "price = $"+strconv.Itoa(cnt))
-		values = append(values,product.Name)
+		values = append(values, product.Name)
 	}
 	if product.ImageUrl != nil {
 		cnt++
 		parts = append(parts, "image_url = $"+strconv.Itoa(cnt))
-		values = append(values,product.Name)
+		values = append(values, product.Name)
 	}
 	if len(parts) <= 0 {
 		return nil, errors.New("nothing to update")
 	}
 	cnt++
-	query = query + strings.Join(parts," , ") + " WHERE id = $"+ strconv.Itoa(cnt)
-	values = append(values,product.Id)
+	query = query + strings.Join(parts, " , ") + " WHERE id = $" + strconv.Itoa(cnt)
+	values = append(values, product.Id)
 	result, err := ps.db.Exec(query, values...)
 	if err != nil {
 		return nil, err
