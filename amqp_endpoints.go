@@ -14,7 +14,7 @@ func NewAmqpEndpointFactory(productService ProductService) *AMQPEndpointFactory 
 	return &AMQPEndpointFactory{productService: productService}
 }
 
-func(fac *AMQPEndpointFactory) GetProductByIdAMQPEndpoint() amqp.Handler {
+func (fac *AMQPEndpointFactory) GetProductByIdAMQPEndpoint() amqp.Handler {
 	return func(message amqp.Message) *amqp.Message {
 		cmd := &GetProductByIdCommand{}
 		if err := json.Unmarshal(message.Body, cmd); err != nil {
@@ -33,5 +33,3 @@ func OK(d interface{}) *amqp.Message {
 	data, _ := json.Marshal(d)
 	return &amqp.Message{Body: data}
 }
-
-
