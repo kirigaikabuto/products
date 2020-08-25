@@ -2,6 +2,7 @@ package products
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/djumanoff/amqp"
 )
 
@@ -15,11 +16,12 @@ func NewAmqpEndpointFactory(productService ProductService) *AMQPEndpointFactory 
 
 func(fac *AMQPEndpointFactory) GetProductByIdAMQPEndpoint() amqp.Handler {
 	return func(message amqp.Message) *amqp.Message {
-		cmd := GetProductByIdCommand{}
+		cmd := &GetProductByIdCommand{}
 		if err := json.Unmarshal(message.Body, cmd); err != nil {
 			return &amqp.Message{}
 		}
 		resp, err := cmd.Exec(fac.productService)
+		fmt.Println(resp)
 		if err != nil {
 			return &amqp.Message{}
 		}
